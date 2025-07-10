@@ -1,0 +1,43 @@
+<!-- index.wxml -->
+<view class="container">
+  <!-- 顶部用户信息 -->
+  <view class="header">
+    <image src="/images/avatar.png" class="avatar"></image>
+    <view class="user-info">
+      <text class="name">{{userInfo.name}}</text>
+      <text class="title">我的预约日程</text>
+    </view>
+  </view>
+
+  <!-- 周选择器 -->
+  <view class="week-selector">
+    <view wx:for="{{weekDays}}" wx:key="index" class="day-item {{item.isToday ? 'today' : ''}}">
+      <text class="day-name">{{item.dayName}}</text>
+      <text class="date">{{item.date}}</text>
+    </view>
+  </view>
+
+  <!-- 日历区域 -->
+  <scroll-view scroll-y class="calendar-container">
+    <view wx:for="{{scheduleData}}" wx:key="date" class="day-schedule">
+      <view class="day-header">
+        <text class="day-title">{{item.date}} ({{item.dayName}})</text>
+        <text class="available-count">{{item.availableSlots}}个可预约时段</text>
+      </view>
+      
+      <view class="time-slots">
+        <view wx:for="{{item.slots}}" wx:key="id" class="slot {{slot.status}}">
+          <text class="time">{{slot.startTime}} - {{slot.endTime}}</text>
+          <text class="status">{{slot.status === 'available' ? '可预约' : slot.status === 'booked' ? '已预约' : '已满'}}</text>
+          <text wx:if="{{slot.booker}}" class="booker">{{slot.booker}}预约</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部操作按钮 -->
+  <view class="action-bar">
+    <button class="add-btn" bindtap="addSchedule">添加时间段</button>
+    <button class="share-btn" open-type="share">分享日程</button>
+  </view>
+</view>

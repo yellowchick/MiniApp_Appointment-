@@ -1,0 +1,105 @@
+<!-- profile.wxml -->
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-card">
+    <image src="{{userInfo.avatar}}" class="avatar"></image>
+    <view class="user-info">
+      <text class="name">{{userInfo.name}}</text>
+      <text class="title">{{userInfo.title}}</text>
+    </view>
+    <view class="stats">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.totalBookings}}</text>
+        <text class="stat-label">总预约</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.upcoming}}</text>
+        <text class="stat-label">即将进行</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 预约卡片 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">我的预约</text>
+      <text class="section-more" bindtap="viewAllBookings">查看全部 ></text>
+    </view>
+    
+    <scroll-view scroll-x class="booking-scroll">
+      <view wx:for="{{bookings}}" wx:key="id" class="booking-card">
+        <view class="booking-date">
+          <text class="day">{{item.day}}</text>
+          <text class="date">{{item.date}}</text>
+        </view>
+        <view class="booking-info">
+          <text class="time">{{item.time}}</text>
+          <text class="with">与 {{item.with}}</text>
+          <text class="topic">{{item.topic}}</text>
+        </view>
+        <view class="booking-status {{item.status}}">
+          {{item.status === 'confirmed' ? '已确认' : '待确认'}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- 我的日程 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">我的日程</text>
+      <text class="section-more" bindtap="manageSchedule">管理 ></text>
+    </view>
+    
+    <view class="schedule-overview">
+      <view class="overview-item">
+        <text class="overview-value">{{scheduleStats.availableSlots}}</text>
+        <text class="overview-label">可预约时段</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{scheduleStats.bookedSlots}}</text>
+        <text class="overview-label">已预约</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{scheduleStats.upcoming}}</text>
+        <text class="overview-label">即将进行</text>
+      </view>
+    </view>
+    
+    <view class="schedule-actions">
+      <button class="action-btn" bindtap="addTimeSlot">
+        <image src="/images/add.png" class="action-icon"></image>
+        <text>添加时间段</text>
+      </button>
+      <button class="action-btn" bindtap="shareSchedule">
+        <image src="/images/share.png" class="action-icon"></image>
+        <text>分享日程</text>
+      </button>
+    </view>
+  </view>
+  
+  <!-- 设置 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">设置</text>
+    </view>
+    
+    <view class="settings">
+      <view class="setting-item" bindtap="notificationSettings">
+        <image src="/images/notification.png" class="setting-icon"></image>
+        <text>通知设置</text>
+        <image src="/images/arrow.png" class="arrow"></image>
+      </view>
+      <view class="setting-item" bindtap="privacySettings">
+        <image src="/images/privacy.png" class="setting-icon"></image>
+        <text>隐私设置</text>
+        <image src="/images/arrow.png" class="arrow"></image>
+      </view>
+      <view class="setting-item" bindtap="helpCenter">
+        <image src="/images/help.png" class="setting-icon"></image>
+        <text>帮助中心</text>
+        <image src="/images/arrow.png" class="arrow"></image>
+      </view>
+    </view>
+  </view>
+</view>

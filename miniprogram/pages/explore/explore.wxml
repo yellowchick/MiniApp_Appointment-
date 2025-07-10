@@ -1,0 +1,60 @@
+<!--pages/explore/explore.wxml-->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="title">探索日程</view>
+    <view class="subtitle">发现他人分享的日程安排</view>
+  </view>
+  
+  <!-- 分享日程卡片 -->
+  <view class="shared-schedule" wx:if="{{sharedSchedule}}">
+    <view class="schedule-header">
+      <image src="{{sharedSchedule.avatar}}" class="avatar"></image>
+      <view class="user-info">
+        <text class="name">{{sharedSchedule.name}}</text>
+        <text class="title">{{sharedSchedule.title}}</text>
+      </view>
+    </view>
+    
+    <view class="schedule-content">
+      <view class="date-range">
+        <text>{{sharedSchedule.startDate}} 至 {{sharedSchedule.endDate}}</text>
+      </view>
+      
+      <view class="stats">
+        <view class="stat-item">
+          <text class="stat-value">{{sharedSchedule.availableSlots}}</text>
+          <text class="stat-label">可预约时段</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{sharedSchedule.bookedSlots}}</text>
+          <text class="stat-label">已预约</text>
+        </view>
+      </view>
+      
+      <button class="view-btn" bindtap="viewSharedSchedule">查看完整日程</button>
+    </view>
+  </view>
+  
+  <!-- 分享入口 -->
+  <view class="share-container" wx:else>
+    <image src="/images/explore.png" class="explore-image"></image>
+    <text class="explore-title">发现他人分享的日程</text>
+    <text class="explore-desc">当有人分享日程给您时，您可以在这里查看并预约对方的时间</text>
+    
+    <view class="share-box">
+      <text class="share-title">分享您的日程</text>
+      <text class="share-desc">点击下方按钮生成分享链接，发送给需要预约的人</text>
+      
+      <button class="share-btn" open-type="share">
+        <image src="/images/share.png" class="share-icon"></image>
+        <text>分享我的日程</text>
+      </button>
+      
+      <view class="share-link" bindtap="copyShareLink">
+        <text>https://schedule.app/{{userId}}</text>
+        <text class="copy-btn">复制链接</text>
+      </view>
+    </view>
+  </view>
+</view>
