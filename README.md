@@ -21,3 +21,36 @@
 │
 └── README.md            # 项目说明
 ```
+
+
+
+## 新增图片资源
+
+需要添加以下图片资源到/images目录：
+
+text
+
+```
+arrow-left.png       左箭头图标
+arrow-right.png      右箭头图标
+calendar-empty.png   空状态日历图标
+location.png         位置图标
+participants.png     参与者图标
+edit.png             编辑图标
+delete.png           删除图标
+add-white.png        白色添加图标
+calendar-icon.png   # 日历图标
+```
+
+
+
+
+
+### 小程序页面设计
+
+底部导航栏：首页，探索，我的
+
+#### 我的
+
+- 名片栏
+- 

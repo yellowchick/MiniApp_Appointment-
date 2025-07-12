@@ -233,3 +233,236 @@
   height: 30rpx;
   margin-left: auto;
 }
+
+/* 月份导航 */
+.month-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20rpx 0;
+  background-color: #fff;
+  padding: 20rpx 0;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.nav-arrow {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.month-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1890ff;
+  margin: 0 40rpx;
+}
+
+/* 星期标题 - 使用网格布局 */
+.week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #f0f8ff;
+  border-radius: 12rpx 12rpx 0 0;
+  margin-bottom: 2rpx;
+}
+
+.week-day {
+  flex: 1;
+  text-align: center;
+  padding: 15rpx 0;
+  font-size: 28rpx;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+/* 日历容器 */
+.calendar-container {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.calendar-cell {
+  width: 14.28%; /* 100% / 7 */
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+  margin: 5rpx 0;
+}
+
+.day-number {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.other-month .day-number {
+  color: #ccc;
+}
+
+.today .day-number {
+  color: #fff;
+  font-weight: bold;
+}
+
+.today {
+  background-color: #1890ff;
+}
+
+.selected .day-number {
+  color: #fff;
+  font-weight: bold;
+}
+
+.selected {
+  background-color: #52c41a;
+}
+
+.has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 10rpx;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background-color: #fa541c;
+}
+
+/* 查看当日详情按钮 */
+/* 查看当日详情按钮 - 紧凑型 */
+.view-detail-btn {
+  padding: 30rpx 20rpx;
+  text-align: center;
+}
+
+.detail-btn {
+  background: linear-gradient(to right, #1890ff, #52c41a);
+  color: white;
+  border-radius: 50rpx;
+  height: 90rpx;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(24, 144, 255, 0.3);
+  transition: all 0.3s ease;
+  max-width: 90%;
+}
+
+.detail-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 6rpx rgba(24, 144, 255, 0.3);
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  padding: 0 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.date-text {
+  font-size: 36rpx;  /* 稍大字体突出日期 */
+  font-weight: bold;
+  min-width: 90rpx;   /* 确保完整显示5个字符 */
+  text-align: center;
+  letter-spacing: -0.5rpx; /* 紧凑字符间距 */
+}
+
+.btn-text {
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-left: 8rpx;  /* 您指定的间距 */
+  white-space: nowrap;
+}
+
+/* 响应式调整 */
+@media (max-width: 400px) {
+  .date-text {
+    font-size: 34rpx;
+    min-width: 85rpx;
+  }
+  
+  .btn-text {
+    font-size: 30rpx;
+  }
+  
+  .calendar-icon {
+    width: 38rpx;
+    height: 38rpx;
+  }
+}
+
+@media (max-width: 360px) {
+  .date-text {
+    font-size: 32rpx;
+    min-width: 80rpx;
+  }
+  
+  .btn-text {
+    font-size: 28rpx;
+  }
+  
+  .calendar-icon {
+    width: 36rpx;
+    height: 36rpx;
+  }
+}
+
+/* 超小屏幕特殊处理 */
+@media (max-width: 320px) {
+  .btn-content {
+    padding: 0 20rpx;
+  }
+  
+  .date-text {
+    font-size: 30rpx;
+    min-width: 75rpx;
+  }
+  
+  .btn-text {
+    font-size: 26rpx;
+    margin-left: 6rpx;
+  }
+  
+  .calendar-icon {
+    width: 34rpx;
+    height: 34rpx;
+    margin-left: 8rpx;
+  }
+}
+/* 预约卡片样式调整 */
+.booking-scroll {
+  white-space: nowrap;
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+
+.booking-card {
+  display: inline-block;
+  width: 480rpx;
+  border: 1rpx solid #eee;
+  border-radius: 16rpx;
+  padding: 25rpx;
+  margin-right: 20rpx;
+  position: relative;
+}

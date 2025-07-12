@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/explore/explore",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/day-detail/day-detail"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

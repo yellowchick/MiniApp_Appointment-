@@ -1,0 +1,139 @@
+/* pages/day-detail/day-detail.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 30rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-top: 10rpx;
+}
+
+.event-list {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.event-card {
+  display: flex;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.event-time {
+  width: 200rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.event-content {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.event-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.detail-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
+
+.detail-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.event-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.action-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 10rpx 0;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+}
+
+.empty-image {
+  width: 300rpx;
+  height: 300rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 36rpx;
+  color: #999;
+  margin-bottom: 15rpx;
+}
+
+.empty-tip {
+  font-size: 28rpx;
+  color: #ccc;
+}
+
+.add-btn-container {
+  position: fixed;
+  bottom: 40rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.add-btn {
+  background: linear-gradient(to right, #1890ff, #52c41a);
+  color: white;
+  border-radius: 50rpx;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+.add-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}

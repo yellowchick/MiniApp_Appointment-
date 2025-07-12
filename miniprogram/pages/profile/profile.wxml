@@ -19,10 +19,46 @@
     </view>
   </view>
   
-  <!-- 预约卡片 -->
+  <!-- 月份导航 -->
+  <view class="month-navigation">
+    <image src="/images/arrow-left.png" class="nav-arrow" bindtap="prevMonth"></image>
+    <text class="month-title">{{currentMonth}}</text>
+    <image src="/images/arrow-right.png" class="nav-arrow" bindtap="nextMonth"></image>
+  </view>
+  
+ <!-- 日历容器（统一网格布局） -->
+ <view class="calendar-container">
+    <!-- 星期标题（使用网格布局） -->
+    <view class="week-header">
+      <view wx:for="{{weekDays}}" wx:key="index" class="week-day">
+        {{item}}
+      </view>
+    </view>
+    
+    <!-- 日历区域（使用网格布局） -->
+    <view class="calendar-grid">
+      <view wx:for="{{calendarDays}}" wx:key="index" class="calendar-cell {{item.isToday ? 'today' : ''}} {{item.isSelected ? 'selected' : ''}} {{item.hasEvent ? 'has-event' : ''}} {{item.isCurrentMonth ? '' : 'other-month'}}"
+            bindtap="selectDate" data-date="{{item.date}}">
+        <text class="day-number">{{item.day}}</text>
+        <view wx:if="{{item.hasEvent}}" class="event-indicator"></view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 查看当日详情按钮 -->
+  <view class="view-detail-btn">
+  <view class="detail-btn" bindtap="viewDayDetail">
+    <view class="btn-content">
+      <text class="date-text">{{formattedSelectedDate}}</text>
+      <text class="btn-text">详情</text>
+    </view>
+  </view>
+</view>
+  
+  <!-- 我的预约 -->
   <view class="section">
     <view class="section-header">
-      <text class="section-title">我的预约</text>
+      <text class="section-title">近期预约</text>
       <text class="section-more" bindtap="viewAllBookings">查看全部 ></text>
     </view>
     
@@ -42,40 +78,6 @@
         </view>
       </view>
     </scroll-view>
-  </view>
-  
-  <!-- 我的日程 -->
-  <view class="section">
-    <view class="section-header">
-      <text class="section-title">我的日程</text>
-      <text class="section-more" bindtap="manageSchedule">管理 ></text>
-    </view>
-    
-    <view class="schedule-overview">
-      <view class="overview-item">
-        <text class="overview-value">{{scheduleStats.availableSlots}}</text>
-        <text class="overview-label">可预约时段</text>
-      </view>
-      <view class="overview-item">
-        <text class="overview-value">{{scheduleStats.bookedSlots}}</text>
-        <text class="overview-label">已预约</text>
-      </view>
-      <view class="overview-item">
-        <text class="overview-value">{{scheduleStats.upcoming}}</text>
-        <text class="overview-label">即将进行</text>
-      </view>
-    </view>
-    
-    <view class="schedule-actions">
-      <button class="action-btn" bindtap="addTimeSlot">
-        <image src="/images/add.png" class="action-icon"></image>
-        <text>添加时间段</text>
-      </button>
-      <button class="action-btn" bindtap="shareSchedule">
-        <image src="/images/share.png" class="action-icon"></image>
-        <text>分享日程</text>
-      </button>
-    </view>
   </view>
   
   <!-- 设置 -->

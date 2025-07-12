@@ -1,0 +1,44 @@
+<!-- pages/day-detail/day-detail.wxml -->
+<view class="container">
+  <!-- 头部信息 -->
+  <view class="header">
+    <text class="title">{{formattedDate}}</text>
+    <text class="subtitle">当日日程安排</text>
+  </view>
+  
+  <!-- 事件列表 -->
+  <view class="event-list">
+    <view wx:for="{{events}}" wx:key="id" class="event-card">
+      <view class="event-time">{{item.time}}</view>
+      <view class="event-content">
+        <text class="event-title">{{item.title}}</text>
+        <view class="event-details">
+          <image src="/images/location.png" class="detail-icon"></image>
+          <text class="detail-text">{{item.location}}</text>
+        </view>
+        <view class="event-details">
+          <image src="/images/participants.png" class="detail-icon"></image>
+          <text class="detail-text">{{item.participants}}人参与</text>
+        </view>
+      </view>
+      <view class="event-actions">
+        <image src="/images/edit.png" class="action-icon"></image>
+        <image src="/images/delete.png" class="action-icon"></image>
+      </view>
+    </view>
+    
+    <view wx:if="{{events.length === 0}}" class="empty-state">
+      <image src="/images/calendar-empty.png" class="empty-image"></image>
+      <text class="empty-text">当日没有安排</text>
+      <text class="empty-tip">点击下方按钮添加新日程</text>
+    </view>
+  </view>
+  
+  <!-- 添加按钮 -->
+  <view class="add-btn-container">
+    <button class="add-btn" bindtap="addEvent">
+      <image src="/images/add-white.png" class="add-icon"></image>
+      添加日程
+    </button>
+  </view>
+</view>
