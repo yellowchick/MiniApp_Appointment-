@@ -1,0 +1,256 @@
+/* 页面基础样式 */
+page {
+  background-color: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  height: 100%;
+}
+
+/* 顶部状态栏 */
+.notification-header {
+  padding: 20rpx 30rpx 80rpx;
+  border-bottom-left-radius: 40rpx;
+  border-bottom-right-radius: 40rpx;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.notification-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.notification-header.incoming::before {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+.notification-header.outgoing::before {
+  background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+}
+
+.notification-header.confirmed::before {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.notification-header.rejected::before {
+  background: linear-gradient(135deg, #f85032 0%, #e73827 100%);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  padding-top: 20rpx;
+}
+
+.back-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.back-btn .icon {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.notification-type {
+  flex: 1;
+}
+
+.notification-type .title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+
+.notification-type .status {
+  font-size: 26rpx;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+}
+
+.notification-type .dot {
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+
+/* 通知内容区域 */
+.notification-content {
+  position: relative;
+  top: -60rpx;
+  background: white;
+  border-radius: 30rpx;
+  margin: 0 30rpx;
+  padding: 40rpx 30rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.05);
+  height: calc(100vh - 400rpx);
+}
+
+.notification-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.title-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.notification-time {
+  font-size: 26rpx;
+  color: #7f8c8d;
+  display: flex;
+  align-items: center;
+}
+
+.notification-time .icon {
+  margin-right: 8rpx;
+}
+
+.notification-message {
+  font-size: 30rpx;
+  color: #34495e;
+  line-height: 1.8;
+  margin-bottom: 50rpx;
+  background: #f9f9f9;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  border-left: 8rpx solid #3498db;
+}
+
+/* 详细信息卡片 */
+.detail-card {
+  background: #f8f9fa;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-top: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.03);
+  border: 1rpx solid #eee;
+}
+
+.card-title {
+  font-size: 32rpx;
+  margin-bottom: 30rpx;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.card-title .icon {
+  margin-right: 15rpx;
+}
+
+.detail-item {
+  display: flex;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  width: 140rpx;
+  color: #7f8c8d;
+}
+
+.detail-value {
+  flex: 1;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* 操作区域 */
+.action-area {
+  position: fixed;
+  bottom: 40rpx;
+  left: 0;
+  right: 0;
+  padding: 0 30rpx;
+  z-index: 10;
+}
+
+.action-title {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 30rpx;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 25rpx;
+  border-radius: 15rpx;
+  font-weight: 500;
+  font-size: 32rpx;
+  border: none;
+  color: white;
+  transition: all 0.3s;
+}
+
+.action-btn:active {
+  transform: translateY(5rpx);
+}
+
+.action-btn.confirm {
+  background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  box-shadow: 0 8rpx 20rpx rgba(0, 176, 155, 0.3);
+}
+
+.action-btn.reject {
+  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  box-shadow: 0 8rpx 20rpx rgba(255, 65, 108, 0.3);
+}
+
+/* 状态标签 */
+.status-tag {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.status-badge {
+  padding: 20rpx 50rpx;
+  border-radius: 40rpx;
+  font-weight: 500;
+  font-size: 32rpx;
+  background: #f1f2f6;
+}
+
+.status-badge.confirmed {
+  background: rgba(46, 213, 115, 0.15);
+  color: #2ecc71;
+}
+
+.status-badge.rejected {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+
+.status-badge.outgoing {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+}

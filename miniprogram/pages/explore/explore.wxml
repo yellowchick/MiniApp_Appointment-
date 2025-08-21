@@ -1,59 +1,216 @@
-<!--pages/explore/explore.wxml-->
-<view class="container">
-  <!-- 顶部导航 -->
-  <view class="header">
-    <view class="title">探索日程</view>
-    <view class="subtitle">发现他人分享的日程安排</view>
+<!-- 模块1  -->
+
+<!-- 通知区域 -->
+<view class="notification-section">
+  <!-- 标题和查看全部 -->
+  <view class="section-header">
+    <view class="title-container">
+      <text class="section-title">预约通知</text>
+      <view class="badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+    </view>
+    <navigator 
+      url="/pages/notification-history/notification-history" 
+      class="view-all"
+      hover-class="none"
+    >
+      查看全部
+    </navigator>
   </view>
   
-  <!-- 分享日程卡片 -->
-  <view class="shared-schedule" wx:if="{{sharedSchedule}}">
-    <view class="schedule-header">
+  <!-- 通知列表 -->
+  <view class="notification-list">
+    <block wx:for="{{displayNotifications}}" wx:key="id">
+      <view 
+        class="notification-item {{item.type}} {{item.status}}"
+        bindtap="openNotificationDetail"
+        data-id="{{item.id}}"
+      >
+        <!-- 通知图标 -->
+        <view class="notification-icon">
+          <image 
+            src="{{item.type === 'incoming' ? '/images/notification-incoming.png' : '/images/notification-outgoing.png'}}" 
+            class="icon"
+          ></image>
+        </view>
+        
+        <!-- 通知内容 -->
+        <view class="notification-content">
+          <view class="header">
+            <text class="title">{{item.title}}</text>
+            <text class="time">{{formatTime(item.time)}}</text>
+          </view>
+          <text class="message">{{item.message}}</text>
+          
+          <!-- 操作区域 -->
+          <view class="actions">
+            <!-- 收到请求时的操作 -->
+            <block wx:if="{{item.type === 'incoming' && item.status === 'unread'}}">
+              <button class="btn confirm" bindtap="handleRequest" data-id="{{item.id}}" data-action="confirm">同意</button>
+              <button class="btn reject" bindtap="handleRequest" data-id="{{item.id}}" data-action="reject">拒绝</button>
+            </block>
+            
+            <!-- 对方反馈时的操作 -->
+            <block wx:if="{{item.type !== 'incoming' && item.status === 'unread'}}">
+              <button class="btn acknowledge" bindtap="acknowledgeNotification" data-id="{{item.id}}">了解</button>
+            </block>
+            
+            <!-- 状态标签 -->
+            <block wx:if="{{item.status === 'read'}}">
+              <view class="status-tag">
+                <text wx:if="{{item.type === 'incoming'}}">
+                  {{item.action === 'confirm' ? '已同意' : '已拒绝'}}
+                </text>
+                <text wx:else>
+                  {{item.type === 'confirmed' ? '已同意' : '已拒绝'}}
+                </text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{displayNotifications.length === 0}}">
+      <image src="/images/empty-notification.png" class="empty-icon"></image>
+      <text class="empty-text">暂无新通知</text>
+    </view>
+  </view>
+</view>
+
+<!-- 模块2  -->
+<!-- 他人分享的日程日历区域 -->
+<view class="shared-calendar-section">
+  <!-- 区域标题 -->
+  <view class="section-header">
+    <text class="section-title">分享的日程</text>
+  </view>
+  
+  <!-- 状态1: 从未查看过分享 -->
+  <view class="no-shared-schedule" wx:if="{{!hasSharedSchedule}}">
+    <image src="/images/no-shared-schedule.png" class="empty-image"></image>
+    <text class="empty-text">无分享预约</text>
+    <text class="empty-desc">当有人分享日程链接给您时，您将在这里看到他们的日程安排</text>
+  </view>
+  
+  <!-- 状态2: 有分享的日程 -->
+  <view class="shared-calendar-container" wx:else>
+    <!-- 用户信息 -->
+    <view class="shared-user-info">
       <image src="{{sharedSchedule.avatar}}" class="avatar"></image>
-      <view class="user-info">
+      <view class="user-details">
         <text class="name">{{sharedSchedule.name}}</text>
         <text class="title">{{sharedSchedule.title}}</text>
       </view>
     </view>
     
-    <view class="schedule-content">
-      <view class="date-range">
-        <text>{{sharedSchedule.startDate}} 至 {{sharedSchedule.endDate}}</text>
-      </view>
-      
-      <view class="stats">
-        <view class="stat-item">
-          <text class="stat-value">{{sharedSchedule.availableSlots}}</text>
-          <text class="stat-label">可预约时段</text>
+    <!-- 日历容器 -->
+    <view class="calendar-container">
+      <!-- 月份导航 -->
+      <view class="month-navigation">
+        <view class="nav-btn" bindtap="prevMonth">
+          <image src="/images/prev-icon.png" class="nav-icon"></image>
         </view>
-        <view class="stat-item">
-          <text class="stat-value">{{sharedSchedule.bookedSlots}}</text>
-          <text class="stat-label">已预约</text>
+        <text class="current-month">{{currentYear}}年{{currentMonth}}月</text>
+        <view class="nav-btn" bindtap="nextMonth">
+          <image src="/images/next-icon.png" class="nav-icon"></image>
         </view>
       </view>
       
-      <button class="view-btn" bindtap="viewSharedSchedule">查看完整日程</button>
+      <!-- 星期标题 -->
+      <view class="week-header">
+        <view wx:for="{{weekDays}}" wx:key="index" class="week-day">
+          {{item}}
+        </view>
+      </view>
+      
+      <!-- 日历网格 -->
+      <view class="calendar-grid">
+        <view 
+          wx:for="{{calendarDays}}" 
+          wx:key="index" 
+          class="calendar-cell {{item.isToday ? 'today' : ''}} {{item.isSelected ? 'selected' : ''}} {{item.hasEvent ? 'has-event' : ''}} {{item.isCurrentMonth ? '' : 'other-month'}}"
+          bindtap="selectDate" 
+          data-date="{{item.date}}"
+        >
+          <text class="day-number">{{item.day}}</text>
+          <view wx:if="{{item.hasEvent}}" class="event-indicator"></view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 查看详情按钮 -->
+    <view class="view-detail-btn">
+      <view class="detail-btn" bindtap="viewSharedDayDetail">
+        <view class="btn-content">
+          <text class="date-text">{{formattedSelectedDate}}</text>
+          <text class="btn-text">查看{{sharedSchedule.name}}的当日安排</text>
+        </view>
+      </view>
     </view>
   </view>
+</view>
+
+<!-- 模块3  -->
+<!-- 分享我的日程区域 -->
+<view class="share-section">
+  <view class="section-header">
+    <text class="section-title">分享我的日程</text>
+  </view>
   
-  <!-- 分享入口 -->
-  <view class="share-container" wx:else>
-    <image src="/images/explore.png" class="explore-image"></image>
-    <text class="explore-title">发现他人分享的日程</text>
-    <text class="explore-desc">当有人分享日程给您时，您可以在这里查看并预约对方的时间</text>
+  <view class="share-content">
+    <!-- 分享说明 -->
+    <view class="share-intro">
+      <image src="/images/share-schedule.png" class="intro-image"></image>
+      <text class="intro-text">生成您的专属分享链接，发送给需要预约的人</text>
+      <text class="intro-desc">对方点击链接后，将看到您的日程安排并可以预约时间</text>
+    </view>
     
-    <view class="share-box">
-      <text class="share-title">分享您的日程</text>
-      <text class="share-desc">点击下方按钮生成分享链接，发送给需要预约的人</text>
-      
-      <button class="share-btn" open-type="share">
-        <image src="/images/share.png" class="share-icon"></image>
-        <text>分享我的日程</text>
+    <!-- 分享操作 -->
+    <view class="share-actions">
+      <!-- 微信分享按钮 -->
+      <button class="share-action-btn" open-type="share">
+        <image src="/images/wechat-share.png" class="action-icon"></image>
+        <text class="action-text">微信分享</text>
       </button>
       
-      <view class="share-link" bindtap="copyShareLink">
-        <text>https://schedule.app/{{userId}}</text>
-        <text class="copy-btn">复制链接</text>
+      <!-- 生成二维码按钮 -->
+      <button class="share-action-btn" bindtap="generateQRCode">
+        <image src="/images/qrcode-icon.png" class="action-icon"></image>
+        <text class="action-text">二维码</text>
+      </button>
+    </view>
+    
+    <!-- 分享链接 -->
+    <view class="share-link-container">
+      <text class="share-link">{{shareLink}}</text>
+      <button class="copy-link-btn" bindtap="copyShareLink">
+        <image src="/images/copy-icon.png" class="copy-icon"></image>
+        复制
+      </button>
+    </view>
+    
+    <!-- 二维码预览 -->
+    <view class="qrcode-preview" wx:if="{{qrcodePath}}">
+      <image src="{{qrcodePath}}" class="qrcode-image"></image>
+      <text class="qrcode-tip">扫码预约我的时间</text>
+      <button class="save-btn" bindtap="saveQRCode">保存到相册</button>
+    </view>
+    
+    <!-- 分享提示 -->
+    <view class="share-tips">
+      <text class="tip-title">分享说明：</text>
+      <view class="tip-item">
+        <image src="/images/tip-icon.png" class="tip-icon"></image>
+        <text class="tip-text">对方点击链接后，将看到您的日程日历</text>
+      </view>
+      <view class="tip-item">
+        <image src="/images/tip-icon.png" class="tip-icon"></image>
+        <text class="tip-text">对方可以选择日期和时间段提交预约请求</text>
+      </view>
+      <view class="tip-item">
+        <image src="/images/tip-icon.png" class="tip-icon"></image>
+        <text class="tip-text">您会收到预约通知，同意后双方日程将自动更新</text>
       </view>
     </view>
   </view>

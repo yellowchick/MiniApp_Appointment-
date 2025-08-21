@@ -1,0 +1,80 @@
+<!-- 顶部标题栏 -->
+<view class="header">
+  <view class="header-content">
+    <text class="title">通知历史</text>
+    <text class="subtitle">查看所有通知记录</text>
+  </view>
+</view>
+
+<!-- 标签导航 -->
+<view class="tabs">
+  <view 
+    class="tab {{activeTab === 0 ? 'active' : ''}}" 
+    bindtap="switchTab" 
+    data-index="0"
+  >
+    全部通知
+    <view class="badge" wx:if="{{totalCount > 0}}">{{totalCount}}</view>
+  </view>
+  
+  <view 
+    class="tab {{activeTab === 1 ? 'active' : ''}}" 
+    bindtap="switchTab" 
+    data-index="1"
+  >
+    未读通知
+    <view class="badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+  </view>
+  
+  <view 
+    class="tab {{activeTab === 2 ? 'active' : ''}}" 
+    bindtap="switchTab" 
+    data-index="2"
+  >
+    已处理
+  </view>
+</view>
+
+<!-- 通知列表 -->
+<scroll-view class="notification-list" scroll-y>
+  <block wx:for="{{displayNotifications}}" wx:key="id">
+    <view 
+      class="notification-item {{item.type}} {{item.status}}"
+      bindtap="openNotificationDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="notification-header">
+        <view class="notification-title">
+          <text>{{item.title}}</text>
+          <text class="notification-type">{{getTypeText(item.type)}}</text>
+        </view>
+        <text class="notification-time">{{formatTime(item.time)}}</text>
+      </view>
+      
+      <text class="notification-message">{{item.message}}</text>
+      
+      <view class="notification-details">
+        <text>{{item.details.date}} {{item.details.timeSlot}}</text>
+        <text class="status-badge {{getStatusClass(item)}}">{{getStatusText(item)}}</text>
+      </view>
+    </view>
+  </block>
+  
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{displayNotifications.length === 0}}">
+    <image src="/images/empty-bell.png" class="empty-icon"></image>
+    <text class="empty-text">暂无通知记录</text>
+  </view>
+</scroll-view>
+
+<!-- 底部操作栏 -->
+<view class="action-bar">
+  <text class="stats">
+    共 <text class="highlight">{{totalCount}}</text> 条通知，
+    <text class="highlight">{{unreadCount}}</text> 条未读
+  </text>
+  <button class="clear-btn" bindtap="clearProcessed">
+    <image src="/icons/trash.png" class="btn-icon"></image>
+    清空已处理
+  </button>
+</view>

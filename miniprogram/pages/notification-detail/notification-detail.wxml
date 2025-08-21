@@ -1,0 +1,84 @@
+<!-- 顶部状态栏 -->
+<view class="notification-header {{notification.type}}">
+  <view class="header-content">
+    <view class="back-btn" bindtap="navigateBack">
+      <text class="icon">←</text>
+    </view>
+    <view class="notification-type">
+      <view class="title">{{notification.title}}</view>
+      <view class="status">
+        <text class="dot">●</text>
+        <text>{{notification.status === 'unread' ? '未读通知' : '已读通知'}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 通知内容区域 -->
+<scroll-view class="notification-content" scroll-y>
+  <view class="notification-title">
+    <text class="title-text">{{notification.title}}</text>
+    <view class="notification-time">
+      <text class="icon">🕒</text>
+      <text>{{formatTime(notification.time)}}</text>
+    </view>
+  </view>
+  
+  <view class="notification-message">
+    {{notification.message}}
+  </view>
+  
+  <view class="detail-card">
+    <view class="card-title">
+      <text class="icon">📋</text>
+      <text>预约详情</text>
+    </view>
+    
+    <view class="detail-item">
+      <text class="detail-label">日期</text>
+      <text class="detail-value">{{notification.details.date}}</text>
+    </view>
+    
+    <view class="detail-item">
+      <text class="detail-label">时间段</text>
+      <text class="detail-value">{{notification.details.timeSlot}}</text>
+    </view>
+    
+    <view class="detail-item">
+      <text class="detail-label">类型</text>
+      <text class="detail-value">{{notification.details.purpose}}</text>
+    </view>
+    
+    <view class="detail-item">
+      <text class="detail-label">发起人</text>
+      <text class="detail-value">{{notification.details.initiator}}</text>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 操作区域 -->
+<view class="action-area">
+  <block wx:if="{{notification.type === 'incoming' && notification.status === 'unread'}}">
+    <view class="action-title">请选择您的操作：</view>
+    <view class="action-buttons">
+      <button class="action-btn confirm" bindtap="handleAction" data-action="confirm">同意预约</button>
+      <button class="action-btn reject" bindtap="handleAction" data-action="reject">拒绝请求</button>
+    </view>
+  </block>
+  
+  <block wx:if="{{notification.type === 'incoming' && notification.status === 'read'}}">
+    <view class="status-tag">
+      <view class="status-badge {{notification.details.action}}">
+        {{notification.details.action === 'confirm' ? '已同意' : '已拒绝'}}
+      </view>
+    </view>
+  </block>
+  
+  <block wx:if="{{notification.type === 'outgoing'}}">
+    <view class="status-tag">
+      <view class="status-badge {{notification.type}}">
+        {{notification.type === 'confirmed' ? '对方已同意' : '对方已拒绝'}}
+      </view>
+    </view>
+  </block>
+</view>

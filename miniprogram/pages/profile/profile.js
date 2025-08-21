@@ -39,6 +39,22 @@ Page({
         status: "confirmed"
       }
     ],
+
+    // 即将进行的任务数据
+    upcomingTask: {
+      id: 1,
+      day: "周三",
+      date: "12月6日",
+      weekday: "星期三",
+      time: "10:00 - 11:30",
+      with: "王先生",
+      topic: "项目咨询会议",
+      location: "会议室A",
+      status: "confirmed",
+      progress: 75,
+      countdown: "2天3小时"
+    },
+
     currentDate: new Date(), // 当前显示的月份
     selectedDate: null,     // 用户选择的日期
     calendarDays: [],        // 日历数据
@@ -293,5 +309,47 @@ Page({
     wx.navigateTo({
       url: '/pages/help/index'
     });
+  },
+
+  // 联系用户
+  contactUser() {
+    wx.showToast({
+      title: '联系用户',
+      icon: 'none'
+    });
+    // 实际项目中应跳转到聊天页面
+  },
+
+  // 修改任务
+  modifyTask() {
+    wx.navigateTo({
+      url: '/pages/edit-task/edit-task?id=' + this.data.upcomingTask.id
+    });
+  },
+
+  // 取消任务
+  cancelTask() {
+    wx.showModal({
+      title: '确认取消',
+      content: '确定要取消这个任务吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({
+            title: '任务已取消',
+            icon: 'success'
+          });
+          // 实际项目中应调用API取消任务
+          this.setData({ upcomingTask: null });
+        }
+      }
+    });
+  },
+
+  // 查看全部任务
+  viewAllBookings() {
+    wx.navigateTo({
+      url: '/pages/tasks/index'
+    });
   }
+
 });

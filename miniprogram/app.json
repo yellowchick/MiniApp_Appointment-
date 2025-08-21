@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/explore/explore",
     "pages/profile/profile",
-    "pages/day-detail/day-detail"
+    "pages/day-detail/day-detail",
+    "pages/notification-detail/notification-detail",
+    "pages/notification-history/notification-history"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

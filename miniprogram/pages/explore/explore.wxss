@@ -1,195 +1,644 @@
-/* pages/explore/explore.wxss */
-.container {
-  padding: 20rpx;
-  background-color: #f8f9fa;
-  min-height: 100vh;
+/* 强制重置所有图片样式 */
+image {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
 }
 
-.header {
-  padding: 30rpx 0;
-  text-align: center;
-}
 
-.title {
-  font-size: 40rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.subtitle {
-  font-size: 28rpx;
-  color: #666;
-  margin-top: 10rpx;
-}
-
-.shared-schedule {
+/* === 通知区域 === */
+.notification-section {
   background-color: #fff;
-  border-radius: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.06);
+  margin: 30rpx;
+  padding: 0 30rpx 30rpx;
+  position: relative;
   overflow: hidden;
-  margin-bottom: 30rpx;
+  border: 1rpx solid #f0f0f0;
 }
 
-.schedule-header {
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  position: relative;
+}
+
+.title-container {
   display: flex;
   align-items: center;
-  padding: 30rpx;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
 }
 
-.avatar {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  border: 4rpx solid rgba(255, 255, 255, 0.5);
-}
-
-.user-info {
-  margin-left: 20rpx;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-info .name {
+.section-title {
   font-size: 36rpx;
   font-weight: bold;
+  color: #333;
+  position: relative;
+  padding-left: 16rpx;
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8rpx;
+  height: 32rpx;
+  background-color: #1890ff;
+  border-radius: 4rpx;
+}
+
+.badge {
+  background-color: #FF5252;
+  color: white;
+  font-size: 24rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8rpx;
+  margin-left: 16rpx;
+  font-weight: bold;
+  box-shadow: 0 2rpx 6rpx rgba(255, 82, 82, 0.3);
+}
+
+/* 新增的 "查看全部" 样式 */
+.view-all {
+  font-size: 28rpx;
+  color: #1890ff;
+  display: flex;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.view-all:active {
+  background-color: rgba(24, 144, 255, 0.1);
+}
+
+.view-all::after {
+  content: "→";
+  margin-left: 8rpx;
+  font-weight: bold;
+}
+
+/* 通知列表 */
+.notification-list {
+  padding-top: 16rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+}
+
+.empty-icon {
+  width: 180rpx;
+  height: 180rpx;
+  opacity: 0.3;
+  margin-bottom: 24rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 通知项 */
+.notification-item {
+  display: flex;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f8f8f8;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item.unread {
+  background-color: #fafcff;
+  border-radius: 12rpx;
+  margin: 0 -12rpx;
+  padding: 28rpx 12rpx;
+}
+
+.notification-icon {
+  margin-right: 20rpx;
+}
+
+.notification-icon .icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.notification-content .title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-content .time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.notification-content .message {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+}
+
+/* 操作按钮 */
+.actions {
+  display: flex;
+  margin-top: 8rpx;
+}
+
+.actions .btn {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+  padding: 0 28rpx;
+  margin-right: 20rpx;
+  border-radius: 30rpx;
+}
+
+.actions .confirm {
+  background-color: #07C160;
   color: white;
 }
 
-.user-info .title {
-  font-size: 28rpx;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 5rpx;
+.actions .reject {
+  background-color: #f0f0f0;
+  color: #666;
 }
 
-.schedule-content {
+/* 状态标签 */
+.status-tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  margin-top: 8rpx;
+}
+
+.status-tag.confirmed {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  border: 1rpx solid #91d5ff;
+}
+
+.status-tag.rejected {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+  border: 1rpx solid #ffccc7;
+}
+
+/* 未读指示器 */
+.notification-item.unread .notification-icon::after {
+  content: "";
+  position: absolute;
+  width: 16rpx;
+  height: 16rpx;
+  background-color: #FF5252;
+  border-radius: 50%;
+  margin-left: -8rpx;
+  margin-top: -8rpx;
+}
+
+/*模块2*/
+/* === 分享的日程日历区域 === */
+.shared-calendar-section {
+  background-color: #fff;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.06);
+  margin: 30rpx;
   padding: 30rpx;
+  border: 1rpx solid #f0f0f0;
 }
 
-.date-range {
+/* 无分享状态 */
+.no-shared-schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50rpx 0;
+}
+
+.empty-image {
+  width: 280rpx;
+  height: 280rpx;
+  opacity: 0.7;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
   font-size: 32rpx;
   color: #333;
   font-weight: 500;
-  text-align: center;
-  padding: 15rpx 0;
-  border-bottom: 1rpx solid #eee;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-around;
-  padding: 30rpx 0;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-value {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #1890ff;
-}
-
-.stat-label {
-  font-size: 28rpx;
-  color: #666;
-  margin-top: 10rpx;
-}
-
-.view-btn {
-  background-color: #1890ff;
-  color: white;
-  border-radius: 50rpx;
-  margin-top: 20rpx;
-}
-
-.share-container {
-  background-color: #fff;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  text-align: center;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-}
-
-.explore-image {
-  width: 300rpx;
-  height: 300rpx;
-  margin: 30rpx auto;
-}
-
-.explore-title {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
-  display: block;
   margin-bottom: 15rpx;
 }
 
-.explore-desc {
-  font-size: 28rpx;
+.empty-desc {
+  font-size: 26rpx;
   color: #666;
-  display: block;
-  margin-bottom: 40rpx;
+  text-align: center;
+  padding: 0 40rpx;
 }
 
-.share-box {
-  background-color: #f0f8ff;
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin-top: 30rpx;
+/* 用户信息 */
+.shared-user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
 }
 
-.share-title {
-  font-size: 32rpx;
+.shared-user-info .avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 2rpx solid #eee;
+}
+
+.shared-user-info .user-details {
+  margin-left: 20rpx;
+}
+
+.shared-user-info .name {
+  font-size: 34rpx;
   font-weight: bold;
-  color: #1890ff;
+  color: #333;
   display: block;
-  margin-bottom: 10rpx;
 }
 
-.share-desc {
+.shared-user-info .title {
   font-size: 26rpx;
   color: #666;
   display: block;
+}
+
+/* 月份导航 */
+.month-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 30rpx;
 }
 
-.share-btn {
-  background-color: #fff;
-  border: 1rpx solid #1890ff;
-  color: #1890ff;
-  border-radius: 50rpx;
+.current-month {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #f8f8f8;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.share-icon {
-  width: 40rpx;
-  height: 40rpx;
-  margin-right: 10rpx;
+.nav-icon {
+  width: 30rpx;
+  height: 30rpx;
 }
 
-.share-link {
+/* 星期标题 */
+.week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.week-day {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: bold;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8rpx;
+}
+
+.calendar-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
+  position: relative;
+  background-color: #f9f9f9;
+}
+
+.calendar-cell.other-month {
+  opacity: 0.5;
+}
+
+.day-number {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.calendar-cell.today .day-number {
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.calendar-cell.selected {
+  background-color: #e6f7ff;
+  border: 1rpx solid #91d5ff;
+}
+
+.event-indicator {
+  width: 10rpx;
+  height: 10rpx;
+  background-color: #1890ff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10rpx;
+}
+
+.calendar-cell.has-event .event-indicator {
+  display: block;
+}
+
+/* 查看详情按钮 */
+.view-detail-btn {
+  margin-top: 40rpx;
+}
+
+.detail-btn {
+  background-color: #1890ff;
+  border-radius: 50rpx;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 10rpx rgba(24, 144, 255, 0.3);
+}
+
+.btn-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  border: 1rpx solid #eee;
-  border-radius: 10rpx;
-  padding: 20rpx;
-  margin-top: 30rpx;
-  font-size: 26rpx;
-  color: #666;
 }
 
-.copy-btn {
-  color: #1890ff;
+.date-text {
+  font-size: 30rpx;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-text {
+  font-size: 28rpx;
+  color: white;
+}
+
+/* === 分享我的日程区域 === */
+.share-section {
+  background-color: #fff;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.06);
+  margin: 30rpx;
+  padding: 30rpx;
+  border: 1rpx solid #f0f0f0;
+  margin-bottom: 50rpx;
+}
+
+.share-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 分享介绍 */
+.share-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.intro-image {
+  width: 280rpx;
+  height: 280rpx;
+  margin-bottom: 25rpx;
+}
+
+.intro-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+  text-align: center;
+}
+
+.intro-desc {
   font-size: 26rpx;
-  padding: 10rpx 20rpx;
-  border-radius: 10rpx;
-  background-color: #e6f7ff;
+  color: #666;
+  text-align: center;
+  padding: 0 40rpx;
+}
+
+/* 分享操作按钮 */
+.share-actions {
+  display: flex;
+  justify-content: space-around;
+  margin: 40rpx 0;
+  padding: 20rpx 0;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  /* 添加弹性换行防止重叠 */
+  flex-wrap: wrap;
+}
+
+/* 分享按钮容器 */
+.share-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  padding: 20rpx 10rpx; /* 增加内边距 */
+  margin: 10rpx 0; /* 增加外边距 */
+  width: 200rpx; /* 增加宽度 */
+  border: none;
+  position: relative;
+  /* 确保按钮有足够高度 */
+  min-height: 180rpx;
+}
+
+.share-action-btn::after {
+  border: none !important;
+}
+
+/* 图标容器 */
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 20rpx; /* 增加下边距 */
+}
+
+/* 图标图片 */
+.action-icon {
+  display: block;
+  width: 80rpx;
+  height: 80rpx;
+  /* 移除调试样式 */
+  border: none !important;
+  background-color: transparent !important;
+}
+
+/* 按钮文本 */
+.action-text {
+  font-size: 26rpx;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+  /* 确保文本不会重叠 */
+  display: block;
+  width: 100%;
+  padding-top: 10rpx;
+}
+
+/* === 分享链接区域 === */
+.share-link-container {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin: 30rpx 0; /* 增加上下外边距 */
+}
+
+.share-link {
+  flex: 1;
+  font-size: 26rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-link-btn {
+  background-color: #1890ff;
+  color: white;
+  border-radius: 30rpx;
+  padding: 0 25rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  margin-left: 20rpx;
+}
+
+.copy-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 8rpx;
+}
+
+/* === 二维码预览区域 === */
+.qrcode-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30rpx 0; /* 增加上下外边距 */
+  padding: 30rpx 0;
+}
+
+.qrcode-image {
+  width: 300rpx;
+  height: 300rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid #eee;
+  padding: 10rpx;
+  background: white;
+}
+
+.qrcode-tip {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.save-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 30rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  width: 240rpx;
+}
+
+/* 分享提示 */
+.share-tips {
+  margin-top: 30rpx;
+}
+
+.tip-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.tip-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 15rpx;
+  margin-top: 6rpx;
+}
+
+.tip-text {
+  font-size: 26rpx;
+  color: #666;
+  flex: 1;
+  line-height: 1.5;
 }

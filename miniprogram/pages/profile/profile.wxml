@@ -55,53 +55,80 @@
   </view>
 </view>
   
-  <!-- 我的预约 -->
-  <view class="section">
-    <view class="section-header">
-      <text class="section-title">近期预约</text>
-      <text class="section-more" bindtap="viewAllBookings">查看全部 ></text>
+  <!-- 即将进行的任务 -->
+<view class="section">
+  <view class="section-header">
+    <text class="section-title">即将进行的任务</text>
+    <text class="section-more" bindtap="viewAllBookings">查看全部 ></text>
+  </view>
+
+  <!-- 单个任务卡片 -->
+  <view class="task-container" wx:if="{{upcomingTask}}">
+     <!-- 任务状态 - 移动到卡片顶部 -->
+     <view class="task-status {{upcomingTask.status}}">
+      <text>{{upcomingTask.status === 'confirmed' ? '已确认' : '待确认'}}</text>
+      <text class="countdown" wx:if="{{upcomingTask.status === 'confirmed'}}">
+        倒计时: {{upcomingTask.countdown}}
+      </text>
     </view>
-    
-    <scroll-view scroll-x class="booking-scroll">
-      <view wx:for="{{bookings}}" wx:key="id" class="booking-card">
-        <view class="booking-date">
-          <text class="day">{{item.day}}</text>
-          <text class="date">{{item.date}}</text>
+
+    <view class="task-card">
+      <!-- 任务时间 -->
+      <view class="task-time">
+        <text class="task-date">{{upcomingTask.date}}</text>
+        <text class="task-weekday">{{upcomingTask.day}}</text>
+        <text class="task-duration">{{upcomingTask.time}}</text>
+      </view>
+      
+      <!-- 任务内容 -->
+      <view class="task-content">
+        <text class="task-title">{{upcomingTask.topic}}</text>
+        <view class="task-info">
+          <image src="/images/user-icon.png" class="task-icon"></image>
+          <text class="task-detail">与 {{upcomingTask.with}}</text>
         </view>
-        <view class="booking-info">
-          <text class="time">{{item.time}}</text>
-          <text class="with">与 {{item.with}}</text>
-          <text class="topic">{{item.topic}}</text>
-        </view>
-        <view class="booking-status {{item.status}}">
-          {{item.status === 'confirmed' ? '已确认' : '待确认'}}
+        <view class="task-info">
+          <image src="/images/location-icon.png" class="task-icon"></image>
+          <text class="task-detail">地点: {{upcomingTask.location || '线上会议'}}</text>
         </view>
       </view>
-    </scroll-view>
+      
+      <!-- 任务操作 -->
+      <view class="task-actions">
+        <button class="action-btn" bindtap="contactUser">
+          <image src="/images/contact-icon.png" class="action-icon"></image>
+          <text>联系</text>
+        </button>
+        <button class="action-btn" bindtap="modifyTask">
+          <image src="/images/edit-icon.png" class="action-icon"></image>
+          <text>修改</text>
+        </button>
+        <button class="action-btn cancel-btn" bindtap="cancelTask">
+          <image src="/images/cancel-icon.png" class="action-icon"></image>
+          <text>取消</text>
+        </button>
+      </view>
+    </view>
+    
+    <!-- 任务进度 -->
+    <view class="task-progress">
+      <progress 
+        percent="{{upcomingTask.progress}}" 
+        activeColor="#52c41a" 
+        backgroundColor="#f0f0f0" 
+        stroke-width="8" 
+        active
+      />
+      <text class="progress-text">准备中: {{upcomingTask.progress}}%</text>
+    </view>
   </view>
   
-  <!-- 设置 -->
-  <view class="section">
-    <view class="section-header">
-      <text class="section-title">设置</text>
-    </view>
-    
-    <view class="settings">
-      <view class="setting-item" bindtap="notificationSettings">
-        <image src="/images/notification.png" class="setting-icon"></image>
-        <text>通知设置</text>
-        <image src="/images/arrow.png" class="arrow"></image>
-      </view>
-      <view class="setting-item" bindtap="privacySettings">
-        <image src="/images/privacy.png" class="setting-icon"></image>
-        <text>隐私设置</text>
-        <image src="/images/arrow.png" class="arrow"></image>
-      </view>
-      <view class="setting-item" bindtap="helpCenter">
-        <image src="/images/help.png" class="setting-icon"></image>
-        <text>帮助中心</text>
-        <image src="/images/arrow.png" class="arrow"></image>
-      </view>
-    </view>
+  <!-- 空状态 -->
+  <view class="empty-tasks" wx:else>
+    <image src="/images/no-tasks.png" class="empty-image"></image>
+    <text class="empty-text">当前没有即将进行的任务</text>
+    <text class="empty-tip">添加新任务或查看全部任务</text>
   </view>
+</view>
+
 </view>
