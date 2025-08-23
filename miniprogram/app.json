@@ -14,6 +14,8 @@
     "navigationBarTitleText": "日程预约",
     "navigationBarTextStyle": "white"
   },
+  "lazyCodeLoading": "requiredComponents",
+  "componentFramework": "glass-easel",
   "tabBar": {
     "color": "#666",
     "selectedColor": "#1890ff",
